@@ -48,3 +48,25 @@
         C[i] = sum
         carry = 0
     return C
+
+## 2.2
+
+1. Express the function n^3/1000 - 100n^2 - 100n + 3 in terms of theta-notation.
+  * theta(n^3)
+2. Consider sorting n numbers stored in array A by first finding the smallest element of A and exchanging it with the element in A[1]. Then find the second smallest element of A, and exchange it with A[2]. Continue in this manner for the first n-1 elements of A. Write pseudocode for this algorithm, which is know as selection sort. What loop invariant does this algorithm maintain? Why does it need to run for the first n-1 elements, rather than for all n elements? Give the best-case and worst-case running times of selection sort in theta-notation.
+  * for i in [0...n]
+      min = i
+      for j in [i+1...n]
+        if min > A[j]
+          min = j
+      min_element = A[min]
+      A[min] = A[i]
+      A[i] = min_element
+  * The loop invariant is that A[i..j] will always be sorted in ascending order.
+  * It only needs to run for the first n-1 elements b/c as you constantly swap the current element for the minimum element of the remaining array, you are guaranteed to have the max element at the last index. And there is no more elements left to be swapped.
+  * Best case and worst-case are both theta(n^2)
+3. Consider linear search again. How many elements of the input sequence need to be checked on the average, assuming that the element being searched for is equally likely to be any element in the array? How about in the worst case? What are the average-case and worst-case running times of linear search in theta-notation? Justify your answers.
+  * On average n/2 elements need to be checked
+  * Average-case and worst-case are both theta(n)
+4. How can we modify almost any algorithm to have a good best-case running time?
+  * We can add some special-case check to terminate the algorithm early.

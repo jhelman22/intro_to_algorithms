@@ -19,6 +19,30 @@ Shoes.app(width: 400, height: 500) do
     end
   end
 
+  def selection_sort
+    i = 0
+    min = 0
+    j = 1
+    every 0.01 do
+      break if i == @array.count - 1
+      if @array[min] > @array[j]
+        min = j
+        update_chart(min,j)
+      elsif j == @array.count - 1
+        min_element = @array[min]
+        @array[min] = @array[i]
+        @array[i] = min_element
+        i += 1
+        min = i
+        j = i + 1
+        update_chart(min,j)
+      else
+        j += 1
+        update_chart(min,j)
+      end
+    end
+  end
+
   def update_chart(j=-1,i=-1)
     @chart.clear
     @chart.append do
@@ -48,8 +72,11 @@ Shoes.app(width: 400, height: 500) do
     end
     # Sort button panel
     flow width: 1.0, height: 0.1 do
-      button 'Insertion', width: 1.0, height: 0.5 do
+      button 'Insertion', width: 0.5, height: 0.5 do
         insertion_sort
+      end
+      button 'Selection', width: 0.5, height: 0.5 do
+        selection_sort
       end
       button 'Reset', width: 1.0, height: 0.5 do
         @array = (1..100).to_a.shuffle
