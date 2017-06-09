@@ -70,3 +70,36 @@
   * Average-case and worst-case are both theta(n)
 4. How can we modify almost any algorithm to have a good best-case running time?
   * We can add some special-case check to terminate the algorithm early.
+
+## 2.3
+
+1. Using Figure 2.4 as a model, illustrate the operation of merge sort on the array A = [3,41,52,26,38,57,9,49]
+  * [3] [41] [52] [26] [38] [57] [9] [49]
+  * [3,41] [26,52] [38,57] [9,49]
+  * [3,26,41,52] [9,38,49,57]
+  * [3,9,26,38,41,49,52,57]
+2. Rewrite the MERGE procedure so that it does not use sentinels, instead stopping once either array L or R has had all its elements copied back to A and then copying the remainder of the other array back into A.
+  * MERGE_2(A,p,q,r)
+    n1 = q - p + 1
+    n2 = r - q
+    L = new array of size n1
+    R = new array of size n2
+    for i in (0..n1)
+      L[i] = A[p + i]
+    for j in (0..n2)
+      R[i] = A[q + j + 1]
+    merged = []
+    while L.length and R.length > 0
+      if L[0] <= R[0]
+        merged.push(L.slice!(0))
+      else
+        merged.push(R.slice!(0))
+    merged.push(L) if L.length > 0
+    merged.push(R) if L.length > 0
+    merged.flatten
+3. Use mathematical induction to show that when n is an exact power of 2, the solution of the recurrence
+    T(n) = 2 if n = 2, 2T(n/2) + n if n = 2^k, for k > 1
+  is T(n) = nlgn
+  * Base case n=2, lg2 = 1 so number of levels is lgn. So first level costs 1. Every level after that costs n. So the total cost is nlgn + 1 which ignoring the cost makes T(n) = nlgn
+4. We can express insertion sort as a recursive procedure as follows. In order to sort A[1..n], we recursively sort A[1..n-1] and then insert A[n] into the sorted array A[1..n-1]. Write a recurrence for the running time of this recursive version of insertion sort.
+  * T(n) = c if n = 1, 2T(n-1) if n > 1
