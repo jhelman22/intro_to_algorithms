@@ -43,39 +43,41 @@ Shoes.app(width: 400, height: 500) do
     end
   end
 
-  def merge(startL, stopL, startR, stopR)
-    l = @array.slice(startL..stopL)
-    r = @array.slice(startR..stopR)
-    curr = 0
-    while l.length > 0 && r.length > 0
-      if l[0] <= r[0]
-        @array[startL + curr] = l.slice!(0)
-        curr += 1
+  def merge(left, right)
+    merged = []
+    while left.count > 0 && right.count > 0
+      if left[0] <= right[0]
+        merged.push(left.slice!(0))
       else
-        @array[startL + curr] = r.slice!(0)
-        curr += 1
+        merged.push(right.slice!(0))
       end
     end
-    @array[(startL+curr)..stopR] = l if l.length > 0
-    @array[(startL+curr)..stopR] = r if r.length > 0
+    merged.push(left) if left.count > 0
+    merged.push(right) if right.count > 0
+    merged.flatten
   end
 
   def merge_sort
-    step = 1
-    startL = 0
-    startR = step
-    while step < @array.length
-      startL = 0
-      startL = step
-      while (startR + step) <= @array.length
-        merge(startL, startL + step, startR + step)
-        startL = startR + step
-        startR = startL + step
+    level = @array.map{|a| [a]}
+    next_level = []
+    every 1 do
+      break if level.count == 1
+      if level.count.even?
+        (1...level.count).step(2).each do |i|
+          next_level.push(merge(level[i-1],level[i]))
+        end
+      else
+        (1...level.count-1).step(2).each do |i|
+          next_level.push(merge(level[i-1],level[i]))
+        end
+        element = next_level.slice!(-1)
+        next_level.push(merge(element,level[-1]))
       end
-      merge(startL, startL + step, startR, @array.length) if startR < @array.length
-      step *= 2
+      level = next_level
+      next_level = []
+      @array = level.flatten
+      update_chart
     end
-    update_chart
   end
 
   def update_chart(j=-1,i=-1)
