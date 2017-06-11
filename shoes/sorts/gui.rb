@@ -80,6 +80,27 @@ Shoes.app(width: 400, height: 500) do
     end
   end
 
+  def bubble_sort
+    i = 0
+    j = @array.count
+    every 0.001 do
+      break if i == @array.count
+      if j == i
+        j = @array.count
+        i += 1
+        update_chart
+      else
+        j -= 1
+        if @array[j] < @array[j - 1]
+          update_chart(j, j-1)
+          temp = @array[j-1]
+          @array[j-1] = @array[j]
+          @array[j] = temp
+        end
+      end
+    end
+  end
+
   def update_chart(j=-1,i=-1)
     @chart.clear
     @chart.append do
@@ -109,14 +130,17 @@ Shoes.app(width: 400, height: 500) do
     end
     # Sort button panel
     flow width: 1.0, height: 0.1 do
-      button 'Insertion', width: 0.3, height: 0.5 do
+      button 'Insertion', width: 0.25, height: 0.5 do
         insertion_sort
       end
-      button 'Selection', width: 0.3, height: 0.5 do
+      button 'Selection', width: 0.25, height: 0.5 do
         selection_sort
       end
-      button 'Merge', width: 0.3, height: 0.5 do
+      button 'Merge', width: 0.25, height: 0.5 do
         merge_sort
+      end
+      button 'Bubble', width: 0.25, height: 0.5 do
+        bubble_sort
       end
       button 'Reset', width: 1.0, height: 0.5 do
         @array = (1..100).to_a.shuffle
