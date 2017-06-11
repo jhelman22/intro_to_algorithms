@@ -101,5 +101,4 @@
     T(n) = 2 if n = 2, 2T(n/2) + n if n = 2^k, for k > 1
   is T(n) = nlgn
   * Base case n=2, lg2 = 1 so number of levels is lgn. So first level costs 1. Every level after that costs n. So the total cost is nlgn + 1 which ignoring the cost makes T(n) = nlgn
-4. We can express insertion sort as a recursive procedure as follows. In order to sort A[1..n], we recursively sort A[1..n-1] and then insert A[n] into the sorted array A[1..n-1]. Write a recurrence for the running time of this recursive version of insertion sort.
-  * T(n) = c if n = 1, 2T(n-1) if n > 1
+4. TODO 
