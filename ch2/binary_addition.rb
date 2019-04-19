@@ -18,8 +18,11 @@ def add(a,b)
   c
 end
 
-a = [1,0,0,0,1,1]
-b = [1,1,0,0,1,0]
+puts "a = ?"
+a = gets.chomp.split("").map(&:to_i)
+puts "b = ?"
+b = gets.chomp.split("").map(&:to_i)
+puts "-- Calculating --"
 puts " #{a.join("")}"
 puts "+#{b.join("")}"
 puts "-------------------"
