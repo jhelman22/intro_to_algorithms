@@ -46,6 +46,20 @@ def get_max_subarray(arr, low, high)
          end
 end
 
+def brute_max_subarray(arr)
+  max_left = 0
+  max_right = arr.count - 1
+  max_sum = arr[max_left] + arr[max_right]
+
+  (0...arr.count-1).each do |i|
+    (i+1...arr.count).each do |j|
+      sum = arr[i..j].inject(&:+)
+      max_left, max_right, max_sum = [i, j, sum] if sum > max_sum
+    end
+  end
+  return [max_left, max_right, max_sum]
+end
+
 
 a = [13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7].shuffle
 puts "For arr: [#{a.join(",")}]"
@@ -53,3 +67,8 @@ max_sub =  get_max_subarray(a, 0, a.count-1)
 puts "The maximum subarray starts at #{max_sub[0]}(#{a[max_sub[0]]}) and ends a #{max_sub[1]}(#{a[max_sub[1]]})"
 puts "For a max sum of: #{max_sub[2]}!"
 
+puts "-- BRUTEFORCE --"
+puts "For arr: [#{a.join(",")}]"
+max_sub =  brute_max_subarray(a)
+puts "The maximum subarray starts at #{max_sub[0]}(#{a[max_sub[0]]}) and ends a #{max_sub[1]}(#{a[max_sub[1]]})"
+puts "For a max sum of: #{max_sub[2]}!"
